@@ -639,6 +639,7 @@ class CoverageDataTest(CoverageTest):
         assert hasher.method_calls == [
             mock.call.update([1, 2]),  # lines
             mock.call.update(""),  # file_tracer name
+            mock.call.update({1: [""], 2: [""]}),  # contexts
         ]
 
     def test_add_to_hash_with_arcs(self) -> None:
@@ -650,6 +651,7 @@ class CoverageDataTest(CoverageTest):
         assert hasher.method_calls == [
             mock.call.update([(-1, 17), (17, 23), (23, -1)]),  # arcs
             mock.call.update("hologram_plugin"),  # file_tracer name
+            mock.call.update({17: [""], 23: [""]}),  # contexts
         ]
 
     def test_add_to_lines_hash_with_missing_file(self) -> None:
@@ -661,6 +663,7 @@ class CoverageDataTest(CoverageTest):
         assert hasher.method_calls == [
             mock.call.update([]),
             mock.call.update(None),
+            mock.call.update({}),  # contexts
         ]
 
     def test_add_to_arcs_hash_with_missing_file(self) -> None:
@@ -673,6 +676,7 @@ class CoverageDataTest(CoverageTest):
         assert hasher.method_calls == [
             mock.call.update([]),
             mock.call.update(None),
+            mock.call.update({}),  # contexts
         ]
 
     def test_empty_lines_are_still_lines(self) -> None:
